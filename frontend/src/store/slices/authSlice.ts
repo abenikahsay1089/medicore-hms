@@ -29,6 +29,26 @@ export const login = createAsyncThunk(
   }
 );
 
+export const register = createAsyncThunk(
+  'auth/register',
+  async (payload: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    role: string;
+    phoneNumber?: string;
+  }, { rejectWithValue }) => {
+    try {
+      const response = await authApi.register(payload);
+      return response.data.data;
+    } catch (err: unknown) {
+      const error = err as { response?: { data?: { message?: string } } };
+      return rejectWithValue(error.response?.data?.message || 'Registration failed');
+    }
+  }
+);
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -61,6 +81,22 @@ const authSlice = createSlice({
         localStorage.setItem('user', JSON.stringify(action.payload.user));
       })
       .addCase(login.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(register.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(register.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload.user;
+        state.isAuthenticated = true;
+        localStorage.setItem('accessToken', action.payload.accessToken);
+        localStorage.setItem('refreshToken', action.payload.refreshToken);
+        localStorage.setItem('user', JSON.stringify(action.payload.user));
+      })
+      .addCase(register.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });

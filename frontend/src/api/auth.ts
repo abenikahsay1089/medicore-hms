@@ -5,6 +5,15 @@ export interface LoginPayload {
   password: string;
 }
 
+export interface RegisterPayload {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  role: string;
+  phoneNumber?: string;
+}
+
 export interface AuthUser {
   id: string;
   firstName: string;
@@ -25,6 +34,9 @@ export interface AuthData {
 export const authApi = {
   login: (payload: LoginPayload) =>
     api.post<{ success: boolean; data: AuthData }>('/auth/login', payload),
+
+  register: (payload: RegisterPayload) =>
+    api.post<{ success: boolean; data: AuthData }>('/auth/register', payload),
 
   forgotPassword: (email: string) =>
     api.post('/auth/forgot-password', { email }),

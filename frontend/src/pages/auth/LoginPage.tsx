@@ -94,6 +94,13 @@ export default function LoginPage() {
               {loading ? 'Signing in...' : 'Sign In'}
             </Button>
           </form>
+
+          <Box sx={{ textAlign: 'center', mt: 2 }}>
+            <Typography variant="body2">
+              Don&apos;t have an account?{' '}
+              <Link component={RouterLink} to="/register">Sign up</Link>
+            </Typography>
+          </Box>
         </CardContent>
       </Card>
     </Box>
