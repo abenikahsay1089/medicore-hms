@@ -1,0 +1,39 @@
+# Build
+target/
+dist/
+build/
+*.class
+*.jar
+*.war
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs/
+*.log
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Test coverage
+coverage/
+.jacoco/
+
+# Docker volumes
+postgres_data/
+redis_data/
